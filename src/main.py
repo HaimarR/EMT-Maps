@@ -1,6 +1,6 @@
 import os
 import osmnx as ox
-from filehandler import FileHandler
+from file_handler import FileHandler
 
 def save_graph_to_file(G, filename):
     ox.save_graphml(G, filename)

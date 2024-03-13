@@ -21,11 +21,14 @@ class FileHandler:
             self.__filename = self.__place_name.replace(", ", "-")
             self.__filename = self.__filename.replace(" ", "_")
             self.__filename = self.__filename.replace(",", "-")
+            self.__filename += self.__file_ext
 
-        return f"{self.__filename}{self.__file_ext}"
+        return self.__filename
     
     def getFullPath(self):
-        return f"{self.__save_folder}{self.getFilename()}"
+        if self.__full_path == None:
+            self.__full_path = f"{self.__save_folder}{self.getFilename()}"
+        return self.__full_path
     
     def save_graph_to_file(self, graph):
         ox.save_graphml(graph, self.getFullPath())
