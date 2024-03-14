@@ -11,24 +11,19 @@ class FileHandler:
         self.__filename = None
         self.__save_folder = SAVE_FOLDER
         self.__file_ext = FILE_EXTENSION
-        self.__full_path = None
     
     def getSaveFolder(self):
         return self.__save_folder
     
     def getFilename(self):
-        if self.__filename == None:
-            self.__filename = self.__place_name.replace(", ", "-")
-            self.__filename = self.__filename.replace(" ", "_")
-            self.__filename = self.__filename.replace(",", "-")
+        if self.__filename is None:
+            self.__filename = self.__place_name.replace(", ", "-").replace(" ", "_").replace(",", "-")
             self.__filename += self.__file_ext
 
         return self.__filename
     
     def getFullPath(self):
-        if self.__full_path == None:
-            self.__full_path = f"{self.__save_folder}{self.getFilename()}"
-        return self.__full_path
+        return os.path.join(self.__save_folder, self.getFilename())
     
     def save_graph_to_file(self, graph):
         ox.save_graphml(graph, self.getFullPath())

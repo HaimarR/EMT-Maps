@@ -1,7 +1,7 @@
 import os
 import unittest
 from unittest.mock import patch, MagicMock
-from src.file_handler import FileHandler
+from src.model.file_handler import FileHandler
 
 SAVE_FOLDER = "local_maps/"
 PLACE_NAME = "San Sebastian, Guipuzcoa, Spain"
@@ -26,24 +26,24 @@ class TestFileHandler(unittest.TestCase):
     def test_get_full_path(self):
         self.assertEqual(self.file_handler.getFullPath(), FULL_PATH)
 
-    @patch('src.file_handler.ox.save_graphml')
+    @patch('src.model.file_handler.ox.save_graphml')
     def test_save_graph_to_file(self, mock_save_graphml):
         graph = MagicMock()
         self.file_handler.save_graph_to_file(graph)
         mock_save_graphml.assert_called_once_with(graph, "local_maps/San_Sebastian-Guipuzcoa-Spain.graphml")
 
-    @patch('src.file_handler.ox.load_graphml')
-    @patch('src.file_handler.os.path.exists')
-    @patch('src.file_handler.ox.graph_from_place')
+    @patch('src.model.file_handler.ox.load_graphml')
+    @patch('src.model.file_handler.os.path.exists')
+    @patch('src.model.file_handler.ox.graph_from_place')
     def test_load_graph_from_file_existing(self, mock_graph_from_place, mock_exists, mock_load_graphml):
         mock_exists.return_value = True
         graph = MagicMock()
         mock_load_graphml.return_value = graph
         self.assertEqual(self.file_handler.load_graph_from_file(), graph)
 
-    @patch('src.file_handler.ox.load_graphml')
-    @patch('src.file_handler.os.path.exists')
-    @patch('src.file_handler.ox.graph_from_place')
+    @patch('src.model.file_handler.ox.load_graphml')
+    @patch('src.model.file_handler.os.path.exists')
+    @patch('src.model.file_handler.ox.graph_from_place')
     def test_load_graph_from_file_non_existing(self, mock_graph_from_place, mock_exists, mock_load_graphml):
         mock_exists.return_value = False
         graph = MagicMock()
